@@ -9,7 +9,7 @@ import { logout, setCredentials } from './features/auth/authSlice';
 import type { RootState } from './store';
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: 'http://localhost:5050/api',
+  baseUrl: 'https://ethare-ai-task.vercel.app/api',
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.token || localStorage.getItem('token');
     if (token) {

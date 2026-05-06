@@ -2,6 +2,7 @@
 
 import { useAuth } from '@/hooks/useAuth';
 import { useTheme } from '@/providers/ThemeProvider';
+import { ErrorBoundary } from '@/components/common/ErrorBoundary';
 import { 
   LayoutDashboard, 
   Briefcase, 
@@ -136,14 +137,16 @@ export default function DashboardLayout({
               <Bell size={20} />
               <span className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-white dark:border-slate-900"></span>
             </button>
-            <div className="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-800"></div>
+            
           </div>
         </header>
 
         {/* Content Area */}
         <div className="flex-1 overflow-y-auto p-6 lg:p-8">
           <div className="max-w-6xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-500">
-            {children}
+            <ErrorBoundary>
+              {children}
+            </ErrorBoundary>
           </div>
         </div>
       </main>
