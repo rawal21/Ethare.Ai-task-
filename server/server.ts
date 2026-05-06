@@ -40,23 +40,48 @@ app.use(
 
 
 const allowedOrigins = [
+  "http://localhost:5173",
   "https://ethare-ai-task-vct8.vercel.app",
   ...(process.env.CORS_ORIGIN?.split(",") || []),
 ];
 
 app.use(
   cors({
-    origin: (origin, cb) => {
-      if (!origin || allowedOrigins.includes(origin)) {
-        cb(null, true);
-      } else {
-        cb(new Error("CORS not allowed"));
+    origin: (origin, callback) => {
+      // Allow requests without origin (Postman, mobile apps, server-to-server)
+      if (!origin) {
+        return callback(null, true);
       }
+
+      // Allow explicitly whitelisted origins
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+
+      // Allow Vercel preview deployments for this project
+      if (
+        origin.includes("ethare-ai-task") &&
+        origin.endsWith(".vercel.app")
+      ) {
+        return callback(null, true);
+      }
+
+      return callback(new Error(`CORS not allowed for origin: ${origin}`));
     },
+
     credentials: true,
+
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+
+    allowedHeaders: [
+      "Content-Type",
+      "Authorization",
+    ],
   })
 );
 
+// Handle preflight requests
+app.options("*", cors());
 
 
 app.use(express.json({ limit: "10kb" }));
