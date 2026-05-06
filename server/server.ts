@@ -40,7 +40,7 @@ app.use(
 
 
 const allowedOrigins = [
-  "http://localhost:3000",
+  "https://ethare-ai-task-vct8.vercel.app",
   ...(process.env.CORS_ORIGIN?.split(",") || []),
 ];
 
