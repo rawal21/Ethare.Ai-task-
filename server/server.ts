@@ -40,6 +40,7 @@ app.use(
 
 
 const allowedOrigins = [
+  "http://localhost:3000",
   "http://localhost:5173",
   "https://ethare-ai-task-vct8.vercel.app",
   ...(process.env.CORS_ORIGIN?.split(",") || []),
@@ -80,8 +81,8 @@ app.use(
   })
 );
 
-// Handle preflight requests
-app.options("*", cors());
+
+
 
 
 app.use(express.json({ limit: "10kb" }));
